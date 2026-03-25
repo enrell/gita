@@ -1,35 +1,63 @@
 ---
 const events = [
   {
+    number: "01",
     title: "Palestras Mensais",
-    description: "Especialistas compartilham conhecimento sobre stacks modernas, carreira e empreendedorismo.",
+    subtitle: "Conhecimento em destaque",
+    description: "Especialistas compartilham conhecimento sobre stacks modernas, carreira e empreendedorismo em sessões dinâmicas e interativas.",
     icon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
-    color: "violet",
-    gradient: "from-violet to-violet-600"
+    tags: ["Tech Talks", "Carreira", "Networking"],
+    stat: "20+",
+    statLabel: "palestras realizadas",
+    accentFrom: "#8B5CF6",
+    accentTo: "#7C3AED",
+    glowColor: "rgba(139,92,246,0.25)",
+    borderColor: "rgba(139,92,246,0.4)",
+    tagBg: "rgba(139,92,246,0.15)",
+    tagColor: "#C4B5FD",
   },
   {
+    number: "02",
     title: "Hackathons",
-    description: "Maratonas de programação para resolver desafios reais e criar soluções inovadoras em equipe.",
+    subtitle: "Código em ação",
+    description: "Maratonas de programação para resolver desafios reais e criar soluções inovadoras em equipe com mentoria especializada.",
     icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
-    color: "cyan",
-    gradient: "from-cyan to-cyan-600"
+    tags: ["Programação", "Equipes", "Inovação"],
+    stat: "48h",
+    statLabel: "de imersão criativa",
+    accentFrom: "#06B6D4",
+    accentTo: "#0891B2",
+    glowColor: "rgba(6,182,212,0.25)",
+    borderColor: "rgba(6,182,212,0.4)",
+    tagBg: "rgba(6,182,212,0.15)",
+    tagColor: "#67E8F9",
   },
   {
+    number: "03",
     title: "Mesas Redondas",
-    description: "Discussões abertas sobre tendências tecnológicas e oportunidades do mercado local.",
+    subtitle: "Diálogo que transforma",
+    description: "Discussões abertas sobre tendências tecnológicas, oportunidades do mercado local e o futuro do ecossistema digital.",
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z",
-    color: "deep-navy",
-    gradient: "from-deep-navy to-slate"
+    tags: ["Debate", "Mercado", "Tendências"],
+    stat: "100+",
+    statLabel: "vozes ouvidas",
+    accentFrom: "#A78BFA",
+    accentTo: "#06B6D4",
+    glowColor: "rgba(167,139,250,0.2)",
+    borderColor: "rgba(167,139,250,0.35)",
+    tagBg: "rgba(167,139,250,0.15)",
+    tagColor: "#DDD6FE",
   }
 ];
 ---
 
-<section id="eventos" class="py-24 bg-deep-navy relative overflow-hidden">
+<section id="eventos" class="py-28 bg-deep-navy relative overflow-hidden">
   {/* Animated background */}
   <div class="absolute inset-0">
-    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.05) 1px, transparent 0); background-size: 50px 50px;"></div>
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet/10 rounded-full blur-[120px] animate-pulse" style="animation-duration: 6s;"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan/10 rounded-full blur-[100px] animate-pulse" style="animation-duration: 8s; animation-delay: 1s;"></div>
+    <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.04) 1px, transparent 0); background-size: 48px 48px;"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-violet/8 rounded-full blur-[120px]"></div>
+    <div class="absolute top-1/3 left-0 w-80 h-80 bg-violet/10 rounded-full blur-[100px] animate-pulse" style="animation-duration: 7s;"></div>
+    <div class="absolute bottom-1/4 right-0 w-72 h-72 bg-cyan/10 rounded-full blur-[90px] animate-pulse" style="animation-duration: 9s; animation-delay: 2s;"></div>
   </div>
 
   <div class="container mx-auto px-6 relative z-10">
@@ -42,56 +70,108 @@ const events = [
       <h2 data-animate="fade-up" data-delay="200" class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
         Como Acontece?
       </h2>
-      <p data-animate="fade-up" data-delay="400" class="text-slate max-w-2xl mx-auto text-lg sm:text-xl leading-relaxed">
+      <p data-animate="fade-up" data-delay="400" class="text-muted max-w-2xl mx-auto text-lg sm:text-xl leading-relaxed">
         Uma variedade de formatos para conectar, aprender e construir juntos.
       </p>
     </div>
 
     {/* Events Grid */}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-7 max-w-6xl mx-auto">
       {events.map((event, index) => (
         <div
           data-animate={index === 0 ? "slide-left" : index === 1 ? "fade-up" : "slide-right"}
-          data-delay={`${600 + index * 200}`}
-          class="group relative h-full"
+          data-delay={`${600 + index * 150}`}
+          class="event-card group relative"
+          style={`--accent-from: ${event.accentFrom}; --accent-to: ${event.accentTo}; --glow: ${event.glowColor}; --border-accent: ${event.borderColor};`}
         >
-          {/* Card Container */}
-          <div class="relative h-full bg-gradient-to-b from-white/15 to-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:border-white/40 transition-all duration-500 hover:-translate-y-2 overflow-hidden shadow-xl shadow-black/20">
-            {/* Glow Effect */}
-            <div class={`absolute -inset-px bg-gradient-to-b ${event.gradient} opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-500 rounded-2xl`}></div>
+          {/* Outer glow layer */}
+          <div class="card-glow absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 blur-md" style={`background: linear-gradient(135deg, ${event.accentFrom}, ${event.accentTo})`}></div>
 
-            {/* Shine Effect */}
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          {/* Card body */}
+          <div class="card-body relative h-full rounded-3xl overflow-hidden border transition-all duration-500 group-hover:-translate-y-2"
+            style="background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%); backdrop-filter: blur(16px); border-color: rgba(255,255,255,0.12);">
 
-            {/* Top Line Accent */}
-            <div class={`absolute top-0 left-8 right-8 h-1 bg-gradient-to-r ${event.gradient} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+            {/* Animated top accent bar */}
+            <div class="absolute top-0 left-0 right-0 h-0.5 transition-all duration-500"
+              style={`background: linear-gradient(90deg, transparent, ${event.accentFrom}, ${event.accentTo}, transparent); opacity: 0;`}
+              data-accent-bar>
+            </div>
 
-            <div class="relative flex flex-col h-full">
-              {/* Icon Container */}
-              <div class={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${event.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
-                {/* Icon Glow */}
-                <div class={`absolute inset-0 bg-gradient-to-br ${event.gradient} blur-lg opacity-50 group-hover:opacity-80 transition-opacity duration-500`}></div>
-                <svg class="relative w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={event.icon} />
-                </svg>
+            {/* Corner shine */}
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+              style={`background: radial-gradient(circle at top right, ${event.glowColor}, transparent 70%);`}></div>
+
+            <div class="relative p-8 flex flex-col h-full">
+
+              {/* Top row: number + icon */}
+              <div class="flex items-start justify-between mb-6">
+                {/* Large number badge */}
+                <span class="text-6xl font-black leading-none select-none transition-all duration-500 group-hover:scale-110 origin-left"
+                  style={`background: linear-gradient(135deg, ${event.accentFrom}40, ${event.accentTo}20); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 12px ${event.accentFrom}60);`}>
+                  {event.number}
+                </span>
+
+                {/* Icon */}
+                <div class="relative w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
+                  style={`background: linear-gradient(135deg, ${event.accentFrom}25, ${event.accentTo}15); border: 1px solid ${event.accentFrom}40;`}>
+                  <div class="absolute inset-0 rounded-2xl transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+                    style={`background: linear-gradient(135deg, ${event.accentFrom}40, ${event.accentTo}20); box-shadow: 0 0 20px ${event.accentFrom}60;`}></div>
+                  <svg class="relative w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    style={`color: ${event.accentFrom};`}>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={event.icon} />
+                  </svg>
+                </div>
               </div>
 
-              {/* Content */}
-              <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan transition-colors duration-300">
-                {event.title}
-              </h3>
+              {/* Title + Subtitle */}
+              <div class="mb-4">
+                <p class="text-xs font-semibold uppercase tracking-widest mb-1.5 transition-colors duration-300"
+                  style={`color: ${event.accentFrom};`}>
+                  {event.subtitle}
+                </p>
+                <h3 class="text-2xl font-bold text-white leading-tight transition-colors duration-300 group-hover:text-white">
+                  {event.title}
+                </h3>
+              </div>
 
-              <p class="text-slate/80 text-sm leading-relaxed mb-6 flex-grow">
+              {/* Description */}
+              <p class="text-muted text-sm leading-relaxed mb-6 flex-grow">
                 {event.description}
               </p>
 
-              {/* Bottom Link */}
-              <div class="flex items-center gap-2 text-cyan/70 group-hover:text-cyan transition-colors duration-300 pt-4 border-t border-white/10">
-                <span class="text-sm font-medium">Saiba mais</span>
-                <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
+              {/* Tags */}
+              <div class="flex flex-wrap gap-2 mb-6">
+                {event.tags.map(tag => (
+                  <span class="text-xs font-medium px-3 py-1 rounded-full transition-all duration-300"
+                    style={`background: ${event.tagBg}; color: ${event.tagColor}; border: 1px solid ${event.accentFrom}30;`}>
+                    {tag}
+                  </span>
+                ))}
               </div>
+
+              {/* Divider */}
+              <div class="h-px mb-5 transition-all duration-500"
+                style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);"></div>
+
+              {/* Bottom row: stat + CTA */}
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-2xl font-bold leading-none mb-0.5 transition-all duration-300"
+                    style={`color: ${event.accentFrom};`}>
+                    {event.stat}
+                  </div>
+                  <div class="text-xs text-muted">{event.statLabel}</div>
+                </div>
+
+                <div class="flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 group-hover:gap-2.5"
+                  style={`color: ${event.accentFrom};`}>
+                  <span>Saiba mais</span>
+                  <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -99,13 +179,13 @@ const events = [
     </div>
 
     {/* Timeline */}
-    <div data-animate="fade-up" data-delay="1200" class="mt-20 max-w-4xl mx-auto">
+    <div data-animate="fade-up" data-delay="1200" class="mt-24 max-w-4xl mx-auto">
       <div class="flex items-center justify-between relative">
         <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-violet via-cyan to-violet rounded-full"></div>
         {["Ideia", "Validação", "Execução", "Lançamento"].map((step, i) => (
           <div class="relative z-10 flex flex-col items-center group">
             <div class={`w-4 h-4 rounded-full ${i === 0 ? 'bg-violet' : 'bg-white'} group-hover:scale-150 transition-transform duration-300 border-4 border-deep-navy`}></div>
-            <span class="mt-3 text-sm text-slate group-hover:text-white transition-colors duration-300">{step}</span>
+            <span class="mt-3 text-sm text-muted group-hover:text-white transition-colors duration-300">{step}</span>
           </div>
         ))}
       </div>
@@ -126,3 +206,32 @@ const events = [
     </div>
   </div>
 </section>
+
+<style>
+  .event-card .card-glow {
+    opacity: 0;
+  }
+
+  .event-card:hover .card-body {
+    border-color: var(--border-accent) !important;
+    box-shadow: 0 0 40px var(--glow), 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .event-card:hover [data-accent-bar] {
+    opacity: 1 !important;
+  }
+
+  /* Subtle idle animation */
+  @keyframes float-card {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .event-card:nth-child(1) .card-body { animation: float-card 6s ease-in-out infinite; }
+  .event-card:nth-child(2) .card-body { animation: float-card 7s ease-in-out infinite 1s; }
+  .event-card:nth-child(3) .card-body { animation: float-card 8s ease-in-out infinite 2s; }
+
+  .event-card:hover .card-body {
+    animation: none;
+  }
+</style>

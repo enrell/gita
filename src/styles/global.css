@@ -6,13 +6,14 @@
   --color-off-white: #F8FAFC;
   --color-deep-navy: #0F172A;
   --color-slate: #475569;
+  --color-cadet: #3D4F6B;   /* texto secundário em fundo claro – contraste ≥ 5.5:1 */
+  --color-muted: #94A3B8;   /* texto secundário em fundo escuro – contraste ≥ 4.5:1 */
   --color-violet: #8B5CF6;
   --color-cyan: #06B6D4;
   --color-graphite: #1E293B;
   --color-deep-blue: #1E3A5F;
 
   /* Aliases para compatibilidade */
-  --color-deep-blue: #0F172A;
   --color-orange: #8B5CF6;
   --color-electric-blue: #06B6D4;
 }

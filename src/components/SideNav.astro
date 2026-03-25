@@ -220,25 +220,41 @@ const navItems = [
       }
     });
 
-    // Configuração do Intersection Observer
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0
-    };
+    // Determina a seção mais visível na viewport
+    function getMostVisibleSection() {
+      const viewportHeight = window.innerHeight;
+      let bestId = '';
+      let bestVisible = 0;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          currentSection = entry.target.id;
-          updateActiveNav();
-          updateProgressLine();
-          updateNavMode(entry.target.id);
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        // Sobreposição entre o elemento e a viewport
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(viewportHeight, rect.bottom);
+        const visiblePx = Math.max(0, visibleBottom - visibleTop);
+
+        if (visiblePx > bestVisible) {
+          bestVisible = visiblePx;
+          bestId = section.id;
         }
       });
-    }, observerOptions);
 
-    sections.forEach(section => observer.observe(section));
+      return bestId;
+    }
+
+    function updateFromScroll() {
+      const id = getMostVisibleSection();
+      if (id && id !== currentSection) {
+        currentSection = id;
+        updateActiveNav();
+        updateProgressLine();
+        updateNavMode(id);
+      }
+    }
+
+    // Atualiza na inicialização e no scroll
+    updateFromScroll();
+    window.addEventListener('scroll', updateFromScroll, { passive: true });
 
     function updateActiveNav() {
       navItems.forEach(item => {
@@ -310,17 +326,6 @@ const navItems = [
       });
     });
 
-    // Atualizar também no scroll manual
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveNav();
-          updateProgressLine();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+
   });
 </script>
