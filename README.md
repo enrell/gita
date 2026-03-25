@@ -1,43 +1,35 @@
-# Astro Starter Kit: Minimal
+# GITA
 
-```sh
-bun create astro@latest -- --template minimal
+**Grupo de Inovação e Tecnologia de Igarassu**
+
+Site oficial da comunidade de desenvolvedores e empreendedores de Igarassu, Pernambuco.
+
+## Sobre
+
+O GITA é uma comunidade dedicada a conectar desenvolvedores, empreendedores e entusiastas de tecnologia na região de Igarassu. Nosso objetivo é promover o compartilhamento de conhecimento, networking e o crescimento do ecossistema tecnológico local.
+
+## Tecnologias
+
+- [Astro](https://astro.build) - Framework web
+- [Tailwind CSS](https://tailwindcss.com) - Estilização
+- [Bun](https://bun.sh) - Runtime e gerenciador de pacotes
+
+## Desenvolvimento
+
+```bash
+# Instalar dependências
+bun install
+
+# Iniciar servidor de desenvolvimento
+bun dev
+
+# Build para produção
+bun build
+
+# Preview do build
+bun preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Contato
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- GitHub: [@enrell](https://github.com/enrell)
