@@ -21,6 +21,16 @@ const navItems = [
     {/* Linha de fundo (tracejada) */}
     <div class="line-bg absolute top-0 bottom-0 w-px bg-deep-navy/20 border-l border-dashed border-deep-navy/30 transition-colors duration-300"></div>
 
+    {/* Ponto Viajante (Traveling Dot) */}
+    <div
+      id="traveling-dot"
+      class="absolute top-0 left-0 w-full h-16 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-none z-20"
+      style="opacity: 0; transform: translateY(0px); --active-color: #8B5CF6;"
+    >
+      <span class="traveling-ring absolute w-8 h-8 rounded-full border-2 transition-colors duration-300" style="border-color: var(--active-color);"></span>
+      <span class="traveling-glow w-3 h-3 rounded-full transition-colors duration-300" style="background-color: var(--active-color); box-shadow: 0 0 12px var(--active-color);"></span>
+    </div>
+
     {/* Linha de progresso (preenchida) */}
     <div
       id="progress-line"
@@ -30,34 +40,27 @@ const navItems = [
 
     {/* Pontos de navegação */}
     {navItems.map((item) => (
-      <div
-        class="nav-item relative flex items-center justify-center group nav-item-wrapper w-full h-16 cursor-pointer"
+      <a
+        href={`#${item.id}`}
+        class="nav-item relative flex items-center justify-center group nav-item-wrapper w-12 h-16 cursor-pointer"
         data-nav-item={item.id}
         data-section={item.id}
         data-color={item.hex}
-        role="button"
-        tabindex="0"
         aria-label={`Ir para ${item.label}`}
-        style={`--item-color: ${item.hex}`}
       >
-        {/* Tooltip */}
-        <div class="tooltip absolute right-[calc(100%+12px)] top-0 flex items-center h-full opacity-0 translate-x-2 pointer-events-none transition-all duration-200 ease-out">
-          <div class="tooltip-bg bg-deep-navy/80 backdrop-blur-md text-white/90 text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10 transition-all duration-300 relative">
+        {/* Texto do Badge / Tooltip */}
+        <span class="tooltip absolute right-full mr-1 flex items-center opacity-0 translate-x-3 transition-all duration-200 ease-out z-10 pointer-events-auto">
+          <span class="tooltip-bg bg-deep-navy/90 backdrop-blur-md text-white/90 text-xs font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xl border border-white/10 transition-all duration-300 group-hover:scale-105">
             {item.label}
-            <div class="tooltip-arrow absolute -right-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-deep-navy/80 rotate-45 border-r border-t border-white/10"></div>
-          </div>
-        </div>
-
-        {/* Visual dot */}
-        <span class="relative flex items-center justify-center pointer-events-none">
-          {/* Outer ring */}
-          <span class="nav-ring absolute -inset-3 rounded-full border-2 opacity-0 scale-75 transition-all duration-300"></span>
-          {/* Dot */}
-          <span class="nav-dot w-3 h-3 rounded-full bg-deep-navy/30 transition-all duration-300 group-hover:scale-125"></span>
-          {/* Active dot */}
-          <span class="nav-active-dot absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 rounded-full transition-all duration-300 opacity-0"></span>
+          </span>
+          <span class="tooltip-arrow flex-shrink-0 w-2 h-2 bg-deep-navy/90 rotate-45 border-r border-t border-white/10 -ml-1"></span>
         </span>
-      </div>
+
+        {/* Empty dot para sessões inativas */}
+        <span class="w-8 h-8 relative flex items-center justify-center pointer-events-none">
+          <span class="nav-empty-dot w-2 h-2 rounded-full transition-all duration-300 pointer-events-none group-hover:scale-125"></span>
+        </span>
+      </a>
     ))}
   </div>
 
@@ -71,49 +74,20 @@ const navItems = [
 </nav>
 
 <style>
-  /* Estados visuais da navegação */
-  .nav-button {
-    --item-color: #8B5CF6;
-  }
-
   /* Tooltip - aparece no hover */
   .nav-item-wrapper:hover .tooltip,
   .nav-visible .tooltip {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* Estados de hover no botão */
-  .nav-button:hover .nav-dot,
-  .nav-visible .nav-dot {
-    background-color: var(--item-color);
-  }
-
-  .nav-button:hover .nav-ring,
-  .nav-visible .nav-ring {
-    border-color: var(--item-color);
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  /* Estados ativos */
-  .nav-item-active .nav-ring {
     opacity: 1 !important;
-    border-color: var(--item-color) !important;
-    transform: scale(1) !important;
+    transform: translateX(0) !important;
   }
 
-  .nav-item-active .nav-dot {
-    transform: scale(0);
-    opacity: 0;
+  /* Hover das bolinhas vazias */
+  .nav-empty-dot {
+    background-color: rgba(15, 23, 42, 0.3);
   }
-
-  .nav-item-active .nav-active-dot {
-    width: 12px;
-    height: 12px;
-    opacity: 1;
+  .nav-item-wrapper:hover .nav-empty-dot,
+  .nav-visible .nav-empty-dot {
     background-color: var(--item-color);
-    box-shadow: 0 0 12px var(--item-color);
   }
 
   /* Tooltip hover effects */
@@ -130,16 +104,16 @@ const navItems = [
     border-color: rgba(255, 255, 255, 0.15) !important;
   }
 
-  [data-mode="dark"] .nav-dot {
-    background-color: rgba(255, 255, 255, 0.4) !important;
-  }
-
   [data-mode="dark"] .scroll-text {
     color: rgba(255, 255, 255, 0.5) !important;
   }
 
   [data-mode="dark"] .scroll-indicator {
     background-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  [data-mode="dark"] .nav-empty-dot {
+    background-color: rgba(255, 255, 255, 0.3) !important;
   }
 
   /* Modo escuro para tooltips */
@@ -162,7 +136,7 @@ const navItems = [
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  const initNav = () => {
     const sections = document.querySelectorAll('section[id], footer[id]');
     const navButtons = document.querySelectorAll('[data-section]');
     const progressLine = document.getElementById('progress-line');
@@ -177,7 +151,7 @@ const navItems = [
     const darkSections = ['hero', 'eventos', 'comunidade'];
 
     // Configuração da área de trigger - AGORA 40% DO LADO DIREITO
-    function checkTriggerArea(x) {
+    function checkTriggerArea(x: number) {
       const screenWidth = window.innerWidth;
       const triggerWidth = screenWidth * 0.4;
       return x >= screenWidth - triggerWidth;
@@ -249,16 +223,33 @@ const navItems = [
       }
     }
 
-    // Atualiza na inicialização e no scroll
+    // Atualiza na inicialização, no scroll e no resize
     updateFromScroll();
     window.addEventListener('scroll', updateFromScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      // Usar requestAnimationFrame garante que o layout já recalculou o offsetTop
+      requestAnimationFrame(updateActiveNav);
+    }, { passive: true });
 
     function updateActiveNav() {
-      navItems.forEach(item => {
+      const travelingDot = document.getElementById('traveling-dot');
+      
+      navItems.forEach((item: Element) => {
         item.classList.remove('nav-item-active');
         const itemId = item.getAttribute('data-nav-item');
+        
         if (itemId === currentSection) {
           item.classList.add('nav-item-active');
+          
+          if (travelingDot) {
+            const el = item as HTMLElement;
+            const topPos = el.offsetTop;
+            const itemColor = el.getAttribute('data-color') || '#8B5CF6';
+            
+            travelingDot.style.opacity = '1';
+            travelingDot.style.transform = `translateY(${topPos}px)`;
+            travelingDot.style.setProperty('--active-color', itemColor);
+          }
         }
       });
     }
@@ -277,24 +268,19 @@ const navItems = [
       progressLine.style.height = `${progress}%`;
     }
 
-    function updateNavMode(sectionId) {
+    function updateNavMode(sectionId: string) {
       if (!sideNav) return;
 
       const isDark = darkSections.includes(sectionId);
       sideNav.setAttribute('data-mode', isDark ? 'dark' : 'light');
 
-      const lineBg = sideNav.querySelector('.line-bg');
-      const navDots = sideNav.querySelectorAll('.nav-dot');
-      const scrollText = sideNav.querySelector('.scroll-text');
-      const scrollIndicator = sideNav.querySelector('.scroll-indicator');
+      const lineBg = sideNav.querySelector('.line-bg') as HTMLElement | null;
+      const scrollText = sideNav.querySelector('.scroll-text') as HTMLElement | null;
+      const scrollIndicator = sideNav.querySelector('.scroll-indicator') as HTMLElement | null;
 
       if (lineBg) {
         lineBg.style.borderLeftColor = isDark ? 'rgba(255,255,255,0.25)' : '';
       }
-
-      navDots.forEach(dot => {
-        dot.style.backgroundColor = isDark ? 'rgba(255,255,255,0.4)' : '';
-      });
 
       if (scrollText) {
         scrollText.style.color = isDark ? 'rgba(255,255,255,0.5)' : '';
@@ -327,5 +313,9 @@ const navItems = [
     });
 
 
-  });
+  };
+
+  // Inicializa o script no primeiro load e em navegações via ViewTransitions
+  document.addEventListener('DOMContentLoaded', initNav);
+  document.addEventListener('astro:page-load', initNav);
 </script>
