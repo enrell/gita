@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  {
+    category: "Geral",
+    items: [
+      { q: "O que é o GITA?", a: "O GITA (Grupo de Inovação e Tecnologia de Igarassu) é uma comunidade independente que reúne desenvolvedores, empreendedores e entusiastas de tecnologia no Litoral Norte de Pernambuco. Nosso objetivo é fortalecer o ecossistema digital da região." },
+      { q: "Preciso ser desenvolvedor para participar?", a: "Não! O GITA é para qualquer pessoa interessada em tecnologia, negócios e inovação. Designers, empreendedores, estudantes e profissionais de todas as áreas são bem-vindos." },
+      { q: "O GITA tem fins lucrativos?", a: "Não. Somos uma comunidade independente e voluntária. Nossos eventos são gratuitos ou de baixo custo para facilitar o acesso de todos." },
+    ],
+  },
+  {
+    category: "Eventos",
+    items: [
+      { q: "Com que frequência acontecem os eventos?", a: "Realizamos pelo menos um evento por mês, alternando entre palestras, hackathons, mesas redondas e rinhas de código. Fique de olho no calendário em /eventos." },
+      { q: "Como faço para me inscrever em um evento?", a: "As inscrições são feitas diretamente na página de cada evento. Basta clicar em 'Inscrever-se' e preencher o formulário. Você receberá um e-mail de confirmação." },
+      { q: "Posso propor uma palestra ou workshop?", a: "Sim! Adoramos receber propostas da comunidade. Entre em contato pela página /sobre ou pelo nosso WhatsApp e nos conte sua ideia." },
+    ],
+  },
+  {
+    category: "Rinhas de Código",
+    items: [
+      { q: "O que é uma Rinha de Código?", a: "Rinhas de Código são competições amistosas onde dois participantes resolvem o mesmo desafio de programação ao vivo, e a comunidade vota na melhor implementação — levando em conta legibilidade, performance e criatividade." },
+      { q: "Preciso ser expert para participar de uma Rinha?", a: "Não! Organizamos rinhas para diferentes níveis. Há desafios para iniciantes, intermediários e avançados. O objetivo é aprender e se divertir." },
+      { q: "Posso sugerir um tema para a próxima Rinha?", a: "Claro! Manda sua sugestão de tema para a gente via WhatsApp ou na seção de contato. As melhores sugestões são votadas pela comunidade." },
+    ],
+  },
+  {
+    category: "Comunidade",
+    items: [
+      { q: "Onde fica a sede do GITA?", a: "Somos baseados em Igarassu-PE, mas realizamos eventos em diferentes pontos do Litoral Norte. Também temos uma comunidade ativa online pelo WhatsApp e Discord." },
+      { q: "Como entro no grupo do WhatsApp?", a: "Ao se inscrever em qualquer evento ou pelo formulário na página inicial, você receberá o link de acesso ao grupo. Também pode pedir pelo nosso e-mail." },
+      { q: "Quero apoiar o GITA. Como faço?", a: "Você pode apoiar sendo parceiro (empresa/instituição), sendo mentor em eventos, cedendo espaço físico, ou simplesmente divulgando nosso trabalho para mais pessoas!" },
+    ],
+  },
+];
+---
+
+<Layout
+  title="FAQ — GITA"
+  description="Perguntas frequentes sobre o GITA — comunidade de tecnologia e inovação de Igarassu."
+>
+  {/* Hero */}
+  <section class="relative pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.15) 0%, transparent 60%);"></div>
+    <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white mb-6 border border-white/10" style="background: rgba(255,255,255,0.05);">
+        <span class="w-2 h-2 rounded-full bg-cyan animate-pulse"></span>
+        Perguntas Frequentes
+      </div>
+      <h1 class="text-5xl sm:text-6xl font-extrabold text-white mb-6">
+        Tem dúvidas?<br/>
+        <span class="text-transparent bg-clip-text" style="background-image: linear-gradient(135deg, #06B6D4, #8B5CF6);">A gente responde.</span>
+      </h1>
+      <p class="text-muted text-xl">
+        As respostas para as perguntas mais comuns sobre o GITA, nossos eventos e a comunidade.
+      </p>
+    </div>
+  </section>
+
+  {/* FAQ Sections */}
+  <section class="py-16">
+    <div class="container mx-auto px-6 max-w-3xl">
+      {faqs.map(section => (
+        <div class="mb-14">
+          <h2 class="text-sm font-bold uppercase tracking-widest mb-6 flex items-center gap-3"
+            style="color: #8B5CF6;">
+            <span class="flex-1 h-px" style="background: rgba(139,92,246,0.3);"></span>
+            {section.category}
+            <span class="flex-1 h-px" style="background: rgba(139,92,246,0.3);"></span>
+          </h2>
+          <div class="flex flex-col gap-3">
+            {section.items.map((item, i) => (
+              <details class="faq-item group rounded-2xl border overflow-hidden transition-all duration-300"
+                style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);">
+                <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none select-none gap-4">
+                  <span class="text-white font-semibold text-base">{item.q}</span>
+                  <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300"
+                    style="background: rgba(139,92,246,0.2);">
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300" style="color: #A78BFA;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </span>
+                </summary>
+                <div class="px-6 pb-5">
+                  <p class="text-muted leading-relaxed">{item.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* Still have questions? */}
+  <section class="py-16 text-center border-t" style="border-color: rgba(255,255,255,0.06);">
+    <div class="container mx-auto px-6">
+      <p class="text-muted text-lg mb-6">Não achou o que procurava?</p>
+      <a href="/sobre#contato" class="inline-flex items-center gap-2 px-8 py-4 font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+        style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); box-shadow: 0 0 30px rgba(139,92,246,0.3);">
+        Fale com a gente
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  details[open] .faq-icon svg {
+    transform: rotate(180deg);
+  }
+  details[open] {
+    border-color: rgba(139, 92, 246, 0.3) !important;
+    background: rgba(139, 92, 246, 0.06) !important;
+  }
+  details summary::-webkit-details-marker { display: none; }
+</style>

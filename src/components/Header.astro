@@ -1,0 +1,167 @@
+---
+const navLinks = [
+  { label: "Início",   href: "/" },
+  { label: "Sobre",    href: "/sobre" },
+  { label: "Eventos",  href: "/eventos" },
+  { label: "Rinhas",   href: "/rinhas" },
+  { label: "FAQ",      href: "/faq" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  {/* Backdrop blur bar — fades in on scroll */}
+  <div id="header-bg" class="absolute inset-0 opacity-0 transition-all duration-500"
+    style="background: rgba(15,23,42,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  </div>
+
+  <div class="relative z-10 container mx-auto px-6">
+    <div class="flex items-center justify-between h-16 md:h-18">
+
+      {/* Logo */}
+      <a href="/" class="flex items-center gap-3 group flex-shrink-0">
+        <div class="relative w-9 h-9 rounded-xl overflow-hidden transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+          style="background: linear-gradient(135deg, #8B5CF6, #06B6D4); box-shadow: 0 0 18px rgba(139,92,246,0.5);">
+          <span class="absolute inset-0 flex items-center justify-center text-white font-black text-lg">G</span>
+        </div>
+        <span class="text-white font-bold text-xl tracking-tight">
+          GITA
+        </span>
+      </a>
+
+      {/* Desktop nav */}
+      <nav class="hidden md:flex items-center gap-1">
+        {navLinks.map(link => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              class={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 group
+                ${isActive
+                  ? 'text-white'
+                  : 'text-muted hover:text-white'}`}
+            >
+              {/* Active / hover indicator */}
+              <span class={`absolute inset-0 rounded-lg transition-opacity duration-200
+                ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                style="background: rgba(255,255,255,0.07);">
+              </span>
+              {/* Active dot */}
+              {isActive && (
+                <span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                  style="background: #8B5CF6; box-shadow: 0 0 6px #8B5CF6;">
+                </span>
+              )}
+              <span class="relative">{link.label}</span>
+            </a>
+          );
+        })}
+      </nav>
+
+      {/* CTA Button (desktop) */}
+      <div class="hidden md:flex items-center gap-4">
+        <a
+          href="/comunidade"
+          class="group relative inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white rounded-full overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); box-shadow: 0 0 20px rgba(139,92,246,0.3);"
+        >
+          <span class="relative z-10">Participar</span>
+          <svg class="w-3.5 h-3.5 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style="background: linear-gradient(135deg, #06B6D4, #8B5CF6);">
+          </div>
+        </a>
+      </div>
+
+      {/* Mobile hamburger */}
+      <button id="mobile-menu-btn" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-lg transition-colors duration-200 hover:bg-white/5" aria-label="Menu">
+        <span class="hamburger-line w-5 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+        <span class="hamburger-line w-5 h-0.5 bg-white rounded-full transition-all duration-300"></span>
+        <span class="hamburger-line w-5 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile menu */}
+  <div id="mobile-menu" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0"
+    style="background: rgba(15,23,42,0.97); backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="container mx-auto px-6 py-4 flex flex-col gap-1">
+      {navLinks.map(link => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class={`px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200
+              ${isActive
+                ? 'text-white bg-white/8'
+                : 'text-muted hover:text-white hover:bg-white/5'}`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+      <div class="pt-3 border-t border-white/8 mt-1">
+        <a
+          href="/comunidade"
+          class="flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-white rounded-xl transition-all duration-300"
+          style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);"
+        >
+          Participar da Comunidade
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('site-header');
+    const headerBg = document.getElementById('header-bg');
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const lines = document.querySelectorAll('.hamburger-line');
+    let menuOpen = false;
+
+    // Show/hide header background on scroll
+    function onScroll() {
+      const scrolled = window.scrollY > 20;
+      if (headerBg) {
+        headerBg.style.opacity = scrolled ? '1' : '0';
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile menu toggle
+    mobileBtn?.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+
+      if (mobileMenu) {
+        if (menuOpen) {
+          mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+          mobileMenu.style.opacity = '1';
+        } else {
+          mobileMenu.style.maxHeight = '0';
+          mobileMenu.style.opacity = '0';
+        }
+      }
+
+      // Animate hamburger → X
+      if (lines.length >= 3) {
+        if (menuOpen) {
+          (lines[0] as HTMLElement).style.transform = 'translateY(8px) rotate(45deg)';
+          (lines[1] as HTMLElement).style.opacity = '0';
+          (lines[2] as HTMLElement).style.transform = 'translateY(-8px) rotate(-45deg)';
+        } else {
+          (lines[0] as HTMLElement).style.transform = '';
+          (lines[1] as HTMLElement).style.opacity = '1';
+          (lines[2] as HTMLElement).style.transform = '';
+        }
+      }
+    });
+  });
+</script>

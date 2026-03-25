@@ -1,12 +1,17 @@
 ---
 import '../styles/global.css';
 import '../styles/animations.css';
+import Header from '../components/Header.astro';
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title = "GITA - Grupo de Inovação e Tecnologia de Igarassu" } = Astro.props;
+const {
+  title = "GITA - Grupo de Inovação e Tecnologia de Igarassu",
+  description = "Grupo de Inovação e Tecnologia de Igarassu - Conectando desenvolvedores e empreendedores locais através de eventos, networking e desenvolvimento do polo tecnológico da região."
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -15,22 +20,16 @@ const { title = "GITA - Grupo de Inovação e Tecnologia de Igarassu" } = Astro.
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Grupo de Inovação e Tecnologia de Igarassu - Conectando desenvolvedores e empreendedores locais através de eventos, networking e desenvolvimento do polo tecnológico da região." />
+    <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
   </head>
-  <body class="bg-off-white text-graphite antialiased">
-    <slot />
+  <body class="bg-deep-navy text-graphite antialiased">
+    <Header />
+    <main>
+      <slot />
+    </main>
     <script src="../scripts/scrollAnimations.js"></script>
   </body>
-
-  <script>
-    // Carregar SideNav dinamicamente para evitar problemas de hidratação
-    import('../components/SideNav.astro').then(module => {
-      // O componente já inclui seu próprio script
-    }).catch(() => {
-      // Fallback: nav será renderizado no servidor
-    });
-  </script>
 </html>

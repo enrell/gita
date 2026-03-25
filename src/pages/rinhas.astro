@@ -1,0 +1,384 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const rules = [
+  {
+    number: "01",
+    title: "O desafio é publicado",
+    description: "A equipe do GITA cria um repositório público no GitHub com a descrição completa do desafio, os testes automatizados e os critérios de avaliação.",
+    icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+    color: "#8B5CF6",
+  },
+  {
+    number: "02",
+    title: "Você faz o fork",
+    description: "Clone o repositório oficial, leia as regras e o README. Você tem liberdade total para escolher linguagem, framework e arquitetura — desde que passe nos testes.",
+    icon: "M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2",
+    color: "#06B6D4",
+  },
+  {
+    number: "03",
+    title: "Passe nos testes",
+    description: "Os testes da rinha cobrem corretude, performance e limites de carga. Sua solução precisa passar em 100% dos testes funcionais para entrar no ranking.",
+    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    color: "#8B5CF6",
+  },
+  {
+    number: "04",
+    title: "Submeta seu repo",
+    description: "Abra um Pull Request no repositório oficial apontando para o seu fork. O PR deve conter um README com sua stack, abordagem e instruções de execução via Docker.",
+    icon: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12",
+    color: "#06B6D4",
+  },
+  {
+    number: "05",
+    title: "Avaliação & Ranking",
+    description: "Após o prazo, o GITA roda todos os PRs aprovados contra o gabarito de testes em um ambiente controlado. O ranking é gerado automaticamente com base nas métricas.",
+    icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
+    color: "#8B5CF6",
+  },
+  {
+    number: "06",
+    title: "Resultado ao vivo",
+    description: "O anúncio do ranking é feito em um evento presencial do GITA. Os top 3 são convidados para apresentar suas soluções para a comunidade.",
+    icon: "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z",
+    color: "#06B6D4",
+  },
+];
+
+const criteria = [
+  { label: "Corretude", weight: "40%", desc: "Passar 100% dos testes funcionais é requisito mínimo.", color: "#8B5CF6" },
+  { label: "Performance", weight: "35%", desc: "Tempo de resposta médio e throughput (req/s) sob carga.", color: "#06B6D4" },
+  { label: "Qualidade de Código", weight: "15%", desc: "Legibilidade, organização e boas práticas avaliadas pelo time.", color: "#A78BFA" },
+  { label: "README + Docker", weight: "10%", desc: "Documentação clara e execução via docker-compose funcional.", color: "#67E8F9" },
+];
+
+const techAllowed = [
+  { name: "Go", emoji: "🐹" },
+  { name: "Rust", emoji: "🦀" },
+  { name: "Node.js", emoji: "🟩" },
+  { name: "Python", emoji: "🐍" },
+  { name: "Java", emoji: "☕" },
+  { name: "Elixir", emoji: "💜" },
+  { name: "C#", emoji: "🔷" },
+  { name: "PHP", emoji: "🐘" },
+  { name: "Ruby", emoji: "💎" },
+  { name: "Qualquer outra", emoji: "✨" },
+];
+
+const pastEditions = [
+  {
+    edition: "#02",
+    theme: "API de Pagamentos",
+    winner: "Pedro Costa",
+    stack: "Go + PostgreSQL",
+    rps: "12.400 req/s",
+    participants: 14,
+    date: "FEV 2025",
+    githubUrl: "#",
+  },
+  {
+    edition: "#01",
+    theme: "CRUD com Alta Concorrência",
+    winner: "Ana Lima",
+    stack: "Rust + SQLite",
+    rps: "9.800 req/s",
+    participants: 10,
+    date: "OUT 2024",
+    githubUrl: "#",
+  },
+];
+---
+
+<Layout
+  title="Rinha de Backend — GITA"
+  description="Rinha de Backend do GITA: competição de programação backend com testes automatizados, ranking por performance e apresentação ao vivo."
+>
+
+  {/* ─── HERO ─── */}
+  <section class="relative min-h-[90vh] flex items-center pt-16 overflow-hidden">
+    {/* Bg effects */}
+    <div class="absolute inset-0">
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse at 60% 20%, rgba(139,92,246,0.2) 0%, transparent 55%), radial-gradient(ellipse at 10% 80%, rgba(6,182,212,0.15) 0%, transparent 50%);"></div>
+      <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+
+    {/* Decorative terminal */}
+    <div class="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block opacity-20 select-none pointer-events-none">
+      <div class="rounded-2xl overflow-hidden border border-white/10 w-80" style="background: rgba(15,23,42,0.9);">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10">
+          <span class="w-3 h-3 rounded-full bg-red-500/60"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500/60"></span>
+          <span class="w-3 h-3 rounded-full bg-green-500/60"></span>
+        </div>
+        <pre class="p-4 text-xs font-mono leading-6 text-green-400">{`$ git clone github.com/gita-dev/
+  rinha-backend-04
+
+$ cd rinha-backend-04
+$ docker compose up
+
+🔥 Running 10k requests...
+
+✓ GET  /users     [200] 0.8ms
+✓ POST /auth      [201] 1.2ms  
+✓ GET  /products  [200] 0.6ms
+✓ All 847 tests passed
+
+📊 throughput: 8.432 req/s`}</pre>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10 max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white mb-8 border border-white/10" style="background: rgba(255,255,255,0.05);">
+        <span class="w-2 h-2 rounded-full animate-pulse" style="background: #8B5CF6;"></span>
+        Edição #04 · Tema a definir
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white mb-6 leading-[1.08]">
+        Rinha de<br/>
+        <span class="font-black text-transparent bg-clip-text" style="background-image: linear-gradient(135deg, #8B5CF6 30%, #06B6D4);">
+          Backend
+        </span>
+      </h1>
+
+      <p class="text-muted text-xl leading-relaxed mb-4 max-w-xl">
+        Qual backend aguenta mais? Escolha sua stack, passe nos testes, submeta seu repo — e que o melhor vença.
+      </p>
+      <p class="text-muted/70 text-base mb-10">
+        Tema da próxima edição será anunciado em breve. Inscrições abertas.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a
+          href="https://github.com/gita-dev"
+          target="_blank"
+          rel="noopener"
+          class="group inline-flex items-center gap-2.5 px-7 py-4 font-semibold text-white rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+          style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); box-shadow: 0 0 30px rgba(139,92,246,0.4);"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          Ver repositório oficial
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a
+          href="#como-funciona"
+          class="inline-flex items-center gap-2 px-7 py-4 font-medium text-white rounded-full border border-white/20 hover:bg-white/5 transition-all duration-300 hover:-translate-y-0.5"
+        >
+          Como funciona?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ─── COMO FUNCIONA ─── */}
+  <section id="como-funciona" class="py-24 border-t" style="border-color: rgba(255,255,255,0.06);">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl sm:text-5xl font-bold text-white mb-4">Como Funciona?</h2>
+        <p class="text-muted text-lg max-w-xl mx-auto">Do anúncio do desafio até a entrega do troféu — tudo transparente e automatizado.</p>
+      </div>
+
+      <div class="relative">
+        {/* Vertical line */}
+        <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px hidden sm:block" style="background: linear-gradient(to bottom, transparent, rgba(139,92,246,0.5), rgba(6,182,212,0.5), transparent);"></div>
+
+        <div class="flex flex-col gap-10">
+          {rules.map((rule, i) => (
+            <div class={`relative flex flex-col md:flex-row gap-6 md:gap-12 items-start md:items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+
+              {/* Step number + icon (centered on line) */}
+              <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 w-14 h-14 rounded-2xl items-center justify-center font-black text-white text-sm shadow-lg"
+                style={`background: linear-gradient(135deg, ${rule.color}, ${rule.color}bb); box-shadow: 0 0 24px ${rule.color}50;`}>
+                {rule.number}
+              </div>
+
+              {/* Card */}
+              <div class={`flex-1 ${i % 2 === 1 ? 'md:text-right' : ''}`}>
+                <div class="rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:max-w-sm"
+                  style={`background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); ${i % 2 === 1 ? 'margin-left: auto;' : ''}`}>
+
+                  {/* Mobile step number */}
+                  <div class="flex items-center gap-3 mb-3 md:hidden">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                      style={`background: ${rule.color};`}>{rule.number}</div>
+                  </div>
+
+                  <div class="flex items-start gap-4" style={i % 2 === 1 ? 'flex-direction: row-reverse;' : ''}>
+                    <div class="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center hidden md:flex"
+                      style={`background: ${rule.color}20;`}>
+                      <svg class="w-5 h-5" fill="none" stroke={rule.color} viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={rule.icon}/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="text-white font-bold text-lg mb-2">{rule.title}</h3>
+                      <p class="text-muted text-sm leading-relaxed">{rule.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Spacer for the other side */}
+              <div class="flex-1 hidden md:block"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ─── REGRAS & CRITÉRIOS ─── */}
+  <section class="py-24 border-t" style="border-color: rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <div class="grid md:grid-cols-2 gap-16">
+
+        {/* Critérios de pontuação */}
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-2">Critérios de Pontuação</h2>
+          <p class="text-muted mb-8 text-sm">Como sua solução será avaliada no ranking final.</p>
+          <div class="flex flex-col gap-4">
+            {criteria.map(c => (
+              <div class="rounded-xl p-5 border" style="background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.07);">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-white font-semibold">{c.label}</span>
+                  <span class="text-2xl font-black" style={`color: ${c.color};`}>{c.weight}</span>
+                </div>
+                <div class="w-full h-1.5 rounded-full mb-2" style="background: rgba(255,255,255,0.08);">
+                  <div class="h-full rounded-full" style={`width: ${c.weight}; background: ${c.color}; box-shadow: 0 0 8px ${c.color};`}></div>
+                </div>
+                <p class="text-muted text-xs leading-relaxed">{c.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Regras + Stacks */}
+        <div class="flex flex-col gap-8">
+          <div>
+            <h2 class="text-3xl font-bold text-white mb-2">Regras Gerais</h2>
+            <p class="text-muted mb-6 text-sm">Leia com atenção antes de submeter.</p>
+            <ul class="flex flex-col gap-3">
+              {[
+                "Participação individual — sem times nesta edição.",
+                "100% dos testes funcionais devem passar.",
+                "A solução deve rodar via docker-compose up com um único comando.",
+                "Uso de bancos de dados é permitido (Postgres, MySQL, Redis etc.).",
+                "IA pode ajudar, mas você deve entender e defender seu código.",
+                "PRs com plágio serão desclassificados.",
+                "O deadline é improrrogável — PRs após o prazo não entram no ranking.",
+                "Ao submeter, você concorda em apresentar sua solução se chegar ao top 3.",
+              ].map(rule => (
+                <li class="flex items-start gap-2.5 text-sm text-muted">
+                  <span class="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-xs"
+                    style="background: rgba(139,92,246,0.2); color: #A78BFA;">✓</span>
+                  {rule}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-white font-bold mb-4">Stacks Permitidas</h3>
+            <div class="flex flex-wrap gap-2">
+              {techAllowed.map(t => (
+                <span class="px-3 py-1.5 rounded-full text-sm border transition-all duration-200 hover:border-violet/40 cursor-default"
+                  style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #94A3B8;">
+                  {t.emoji} {t.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ─── HALL DA FAMA ─── */}
+  <section class="py-24 border-t" style="border-color: rgba(255,255,255,0.06);">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-white mb-3">Hall da Fama</h2>
+        <p class="text-muted">Os campeões das edições anteriores.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {pastEditions.map(ed => (
+          <div class="relative rounded-3xl p-6 border overflow-hidden transition-all duration-400 hover:-translate-y-1 group"
+            style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1);">
+            <div class="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style="background: linear-gradient(90deg, transparent, #8B5CF6, #06B6D4, transparent);"></div>
+
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest" style="color: #8B5CF6;">{ed.date}</span>
+                <h3 class="text-white font-black text-2xl">{ed.edition}</h3>
+                <p class="text-muted text-sm">{ed.theme}</p>
+              </div>
+              <a href={ed.githubUrl} target="_blank"
+                class="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 hover:border-violet/40 transition-colors duration-200"
+                style="background: rgba(255,255,255,0.05);">
+                <svg class="w-4 h-4 text-muted" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="flex flex-wrap gap-3 mb-5">
+              {[
+                { label: "🏆 Vencedor", val: ed.winner },
+                { label: "⚡Stack",    val: ed.stack },
+                { label: "🚀 Throughput", val: ed.rps },
+                { label: "👥 Participantes", val: String(ed.participants) },
+              ].map(item => (
+                <div class="rounded-lg px-3 py-2 text-xs border" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);">
+                  <span class="text-muted block">{item.label}</span>
+                  <span class="text-white font-semibold">{item.val}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ─── CTA ─── */}
+  <section class="py-24 text-center border-t" style="border-color: rgba(255,255,255,0.06);">
+    <div class="container mx-auto px-6 max-w-2xl">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white mb-6 border border-white/10"
+        style="background: rgba(255,255,255,0.05);">
+        <span class="w-2 h-2 rounded-full bg-violet animate-pulse"></span>
+        Edição #04 — Em breve
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-white mb-6">
+        Pronto para<br/>
+        <span class="text-transparent bg-clip-text" style="background-image: linear-gradient(135deg, #8B5CF6, #06B6D4);">entrar na rinha?</span>
+      </h2>
+      <p class="text-muted text-lg mb-10">
+        O repositório com o desafio completo será publicado em breve. Deixe seu email para ser avisado primeiro.
+      </p>
+
+      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6">
+        <input
+          type="email"
+          placeholder="seu@email.com"
+          class="flex-1 px-5 py-3.5 rounded-full text-sm text-white placeholder-muted/40 border border-white/15 outline-none focus:border-violet/60 transition-colors duration-200"
+          style="background: rgba(255,255,255,0.06);"
+        />
+        <button
+          type="submit"
+          class="px-7 py-3.5 font-semibold text-white text-sm rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl flex-shrink-0"
+          style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); box-shadow: 0 0 24px rgba(139,92,246,0.4);"
+        >
+          Me avise!
+        </button>
+      </form>
+      <p class="text-muted/50 text-xs">Sem spam. Só a notícia quando o repo estiver no ar.</p>
+    </div>
+  </section>
+
+</Layout>
