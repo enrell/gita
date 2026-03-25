@@ -1,0 +1,251 @@
+---
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center bg-deep-navy overflow-hidden">
+  {/* Interactive Network Background Canvas */}
+  <canvas id="network-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+  {/* Gradient overlay for depth */}
+  <div class="absolute inset-0 bg-gradient-to-b from-deep-navy via-transparent to-deep-navy/90 pointer-events-none"></div>
+
+  {/* Animated gradient orbs */}
+  <div class="absolute top-1/4 -left-32 w-96 h-96 bg-violet/20 rounded-full blur-[120px] animate-pulse" style="animation-duration: 6s;"></div>
+  <div class="absolute bottom-1/4 -right-32 w-80 h-80 bg-cyan/20 rounded-full blur-[100px] animate-pulse" style="animation-duration: 8s; animation-delay: 1s;"></div>
+
+  <div class="relative z-10 container mx-auto px-6 py-20 text-center">
+    {/* Badge */}
+    <div data-animate="fade-up" data-delay="200" class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm rounded-full mb-8 border border-white/10">
+      <span class="w-2 h-2 bg-violet rounded-full animate-pulse"></span>
+      <span class="text-slate/80 text-sm font-medium">Comunidade ativa em Igarassu</span>
+    </div>
+
+    {/* Main title with oversized typography */}
+    <h1 data-animate="fade-up" data-delay="400" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.1] mb-6 max-w-5xl mx-auto">
+      <span>Onde o </span><span class="text-transparent bg-clip-text bg-gradient-to-r from-violet to-cyan">Código</span><br/>
+      <span>Encontra os</span><br/>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan to-violet">Negócios</span>
+    </h1>
+
+    {/* Subtitle */}
+    <p data-animate="fade-up" data-delay="600" class="text-lg sm:text-xl text-slate max-w-2xl mx-auto mb-12 leading-relaxed">
+      Conectando desenvolvedores e inovadores no Litoral Norte.
+      Uma comunidade dedicada a transformar ideias em tecnologia e
+      impulsionar o ecossistema digital da nossa região.
+    </p>
+
+    {/* CTA Buttons */}
+    <div data-animate="fade-up" data-delay="800" class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a
+        href="#comunidade"
+        class="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet to-violet-600 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-violet/30 hover:-translate-y-1"
+      >
+        <span class="relative z-10">Faça parte da Comunidade</span>
+        <svg class="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan to-violet opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </a>
+
+      <a
+        href="#sobre"
+        class="group inline-flex items-center gap-2 px-8 py-4 text-white font-medium rounded-full border border-white/20 hover:bg-white/5 transition-all duration-300 hover:scale-105"
+      >
+        <span>Conheça mais</span>
+        <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    {/* Stats */}
+    <div data-animate="fade-up" data-delay="1000" data-stagger="150" class="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+      <div data-stagger-item class="text-center group cursor-default">
+        <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet to-violet-400 mb-1 transition-transform duration-300 group-hover:scale-110">100+</div>
+        <div class="text-slate/60 text-sm">Membros ativos</div>
+      </div>
+      <div data-stagger-item class="text-center group cursor-default">
+        <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan to-cyan-400 mb-1 transition-transform duration-300 group-hover:scale-110">20+</div>
+        <div class="text-slate/60 text-sm">Eventos realizados</div>
+      </div>
+      <div data-stagger-item class="text-center group cursor-default">
+        <div class="text-4xl font-bold text-white mb-1 transition-transform duration-300 group-hover:scale-110">15+</div>
+        <div class="text-slate/60 text-sm">Parceiros locais</div>
+      </div>
+    </div>
+  </div>
+
+  {/* Scroll indicator */}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-slate/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+    </svg>
+  </div>
+</section>
+
+<script>
+  // Interactive Network Graph
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('network-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let nodes = [];
+    let mouseX = 0, mouseY = 0;
+    let targetMouseX = 0, targetMouseY = 0;
+
+    // Configuration
+    const NODE_COUNT = 60;
+    const CONNECTION_DISTANCE = 150;
+    const MOUSE_INFLUENCE = 200;
+    const MOUSE_REPULSION = 0.05;
+
+    class Node {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 2;
+        this.originalX = this.x;
+        this.originalY = this.y;
+      }
+
+      update() {
+        // Smooth mouse following with parallax effect
+        const dx = mouseX - width / 2;
+        const dy = mouseY - height / 2;
+
+        // Parallax offset based on distance from center
+        const parallaxX = dx * 0.1 * (this.radius / 4);
+        const parallaxY = dy * 0.1 * (this.radius / 4);
+
+        // Return to original position with smooth interpolation
+        this.x += (this.originalX - this.x + parallaxX) * 0.05;
+        this.y += (this.originalY - this.y + parallaxY) * 0.05;
+
+        // Gentle floating motion
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Wrap around edges
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+
+        // Update original position for wrapping
+        this.originalX += this.vx;
+        this.originalY += this.vy;
+
+        if (this.originalX < 0) this.originalX = width;
+        if (this.originalX > width) this.originalX = 0;
+        if (this.originalY < 0) this.originalY = height;
+        if (this.originalY > height) this.originalY = 0;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(139, 92, 246, ${0.4 + (this.radius / 6) * 0.4})`;
+        ctx.fill();
+
+        // Glow effect
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(139, 92, 246, 0.1)`;
+        ctx.fill();
+      }
+    }
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    function init() {
+      resize();
+      nodes = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push(new Node());
+      }
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < nodes.length; i++) {
+        let connections = 0;
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < CONNECTION_DISTANCE && connections < 3) {
+            connections++;
+            const opacity = (1 - distance / CONNECTION_DISTANCE) * 0.3;
+
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(139, 92, 246, ${opacity})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+
+        // Draw connections to mouse position for nodes near mouse
+        const mDx = nodes[i].x - mouseX;
+        const mDy = nodes[i].y - mouseY;
+        const mDistance = Math.sqrt(mDx * mDx + mDy * mDy);
+
+        if (mDistance < MOUSE_INFLUENCE) {
+          const opacity = (1 - mDistance / MOUSE_INFLUENCE) * 0.5;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(mouseX, mouseY);
+          ctx.strokeStyle = `rgba(6, 182, 212, ${opacity})`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    function animate() {
+      // Smooth mouse interpolation
+      mouseX += (targetMouseX - mouseX) * 0.1;
+      mouseY += (targetMouseY - mouseY) * 0.1;
+
+      ctx.clearRect(0, 0, width, height);
+
+      drawConnections();
+
+      nodes.forEach(node => {
+        node.update();
+        node.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    // Event listeners
+    window.addEventListener('resize', init);
+
+    document.addEventListener('mousemove', (e) => {
+      targetMouseX = e.clientX;
+      targetMouseY = e.clientY;
+    });
+
+    // Touch support
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches[0]) {
+        targetMouseX = e.touches[0].clientX;
+        targetMouseY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    // Initialize
+    init();
+    animate();
+  });
+</script>

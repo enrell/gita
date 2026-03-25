@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+import '../styles/animations.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "GITA - Grupo de Inovação e Tecnologia de Igarassu" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Grupo de Inovação e Tecnologia de Igarassu - Conectando desenvolvedores e empreendedores locais através de eventos, networking e desenvolvimento do polo tecnológico da região." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-off-white text-graphite antialiased">
+    <slot />
+    <script src="../scripts/scrollAnimations.js"></script>
+  </body>
+
+  <script>
+    // Carregar SideNav dinamicamente para evitar problemas de hidratação
+    import('../components/SideNav.astro').then(module => {
+      // O componente já inclui seu próprio script
+    }).catch(() => {
+      // Fallback: nav será renderizado no servidor
+    });
+  </script>
+</html>

@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Paleta Dev/Business - Profissional */
+  --color-off-white: #F8FAFC;
+  --color-deep-navy: #0F172A;
+  --color-slate: #475569;
+  --color-violet: #8B5CF6;
+  --color-cyan: #06B6D4;
+  --color-graphite: #1E293B;
+  --color-deep-blue: #1E3A5F;
+
+  /* Aliases para compatibilidade */
+  --color-deep-blue: #0F172A;
+  --color-orange: #8B5CF6;
+  --color-electric-blue: #06B6D4;
+}
+
+* {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}

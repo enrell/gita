@@ -1,0 +1,326 @@
+---
+const navItems = [
+  { id: "hero", label: "Início", color: "violet", hex: "#8B5CF6" },
+  { id: "sobre", label: "Quem Somos", color: "cyan", hex: "#06B6D4" },
+  { id: "eventos", label: "Eventos", color: "violet", hex: "#8B5CF6" },
+  { id: "depoimentos", label: "Depoimentos", color: "cyan", hex: "#06B6D4" },
+  { id: "comunidade", label: "Participe", color: "violet", hex: "#8B5CF6" }
+];
+---
+
+{/* Área de trigger invisível no lado direito */}
+<div id="nav-trigger-area" class="fixed top-0 right-0 w-[20vw] h-screen z-40 hidden lg:block"></div>
+
+<nav
+  id="side-nav"
+  class="fixed right-6 top-[10vh] z-50 hidden lg:flex flex-col items-center h-[80vh] transition-all duration-300 pointer-events-none translate-x-4 opacity-0"
+  data-mode="dark"
+>
+  {/* Container principal */}
+  <div class="relative flex flex-col items-center justify-between flex-1 w-full py-4 pointer-events-auto">
+    {/* Linha de fundo (tracejada) */}
+    <div class="line-bg absolute top-0 bottom-0 w-px bg-deep-navy/20 border-l border-dashed border-deep-navy/30 transition-colors duration-300"></div>
+
+    {/* Linha de progresso (preenchida) */}
+    <div
+      id="progress-line"
+      class="absolute top-0 w-0.5 bg-gradient-to-b from-violet via-cyan to-violet rounded-full transition-all duration-300 origin-top"
+      style="height: 0%;"
+    ></div>
+
+    {/* Pontos de navegação */}
+    {navItems.map((item) => (
+      <div
+        class="nav-item relative flex items-center justify-center group nav-item-wrapper w-full h-10"
+        data-nav-item={item.id}
+        data-color={item.hex}
+      >
+        {/* Tooltip - alinhado ao centro do botão */}
+        <div class="tooltip absolute right-[calc(100%+12px)] top-0 flex items-center h-full opacity-0 translate-x-2 pointer-events-none transition-all duration-200 ease-out">
+          <div class="tooltip-bg bg-deep-navy/80 backdrop-blur-md text-white/90 text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10 transition-all duration-300 relative">
+            {item.label}
+            {/* Seta indicadora */}
+            <div class="tooltip-arrow absolute -right-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-deep-navy/80 rotate-45 border-r border-t border-white/10"></div>
+          </div>
+        </div>
+
+        {/* Botão do ponto */}
+        <button
+          class="relative w-10 h-10 flex items-center justify-center transition-all duration-300 nav-button"
+          data-section={item.id}
+          aria-label={`Ir para ${item.label}`}
+          style={`--item-color: ${item.hex}`}
+        >
+          {/* Outer ring (aparece no hover/active) */}
+          <span class="nav-ring absolute inset-0 rounded-full border-2 opacity-0 scale-50 transition-all duration-300"></span>
+
+          {/* Ponto principal */}
+          <span class="nav-dot w-3 h-3 rounded-full bg-deep-navy/30 transition-all duration-300 group-hover:scale-150"></span>
+
+          {/* Ponto ativo (maior) */}
+          <span class="nav-active-dot absolute w-0 h-0 rounded-full transition-all duration-300 opacity-0"></span>
+        </button>
+      </div>
+    ))}
+  </div>
+
+  {/* Indicador de scroll */}
+  <div class="mt-8 flex flex-col items-center gap-2 pointer-events-auto">
+    <span class="scroll-text text-deep-navy/40 text-[10px] font-medium uppercase tracking-widest rotate-90 origin-center mb-4 transition-colors duration-300">Scroll</span>
+    <div class="scroll-indicator w-px h-8 bg-deep-navy/20 relative overflow-hidden transition-colors duration-300">
+      <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-violet to-transparent animate-pulse transition-colors duration-300"></div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Estados visuais da navegação */
+  .nav-button {
+    --item-color: #8B5CF6;
+  }
+
+  /* Tooltip - aparece no hover */
+  .nav-item-wrapper:hover .tooltip,
+  .nav-visible .tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Estados de hover no botão */
+  .nav-button:hover .nav-dot,
+  .nav-visible .nav-dot {
+    background-color: var(--item-color);
+  }
+
+  .nav-button:hover .nav-ring,
+  .nav-visible .nav-ring {
+    border-color: var(--item-color);
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  /* Estados ativos */
+  .nav-item-active .nav-ring {
+    opacity: 1 !important;
+    border-color: var(--item-color) !important;
+    transform: scale(1) !important;
+  }
+
+  .nav-item-active .nav-dot {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  .nav-item-active .nav-active-dot {
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+    background-color: var(--item-color);
+    box-shadow: 0 0 12px var(--item-color);
+  }
+
+  /* Tooltip hover effects */
+  .nav-item-wrapper:hover {
+    z-index: 10;
+  }
+
+  /* ESTADOS DO MODO ESCURO */
+  [data-mode="dark"] .line-bg {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  [data-mode="dark"] .line-bg::before {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  [data-mode="dark"] .nav-dot {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  [data-mode="dark"] .scroll-text {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  [data-mode="dark"] .scroll-indicator {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Modo escuro para tooltips */
+  [data-mode="dark"] .tooltip-bg {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  [data-mode="dark"] .tooltip-arrow {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  /* Navegação visível (ativo pela área de trigger) */
+  #side-nav.nav-visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const navButtons = document.querySelectorAll('.nav-button');
+    const progressLine = document.getElementById('progress-line');
+    const sideNav = document.getElementById('side-nav');
+    const triggerArea = document.getElementById('nav-trigger-area');
+    const navItems = document.querySelectorAll('.nav-item-wrapper');
+
+    let currentSection = '';
+    let mouseInTriggerArea = false;
+
+    // Seções com fundo escuro
+    const darkSections = ['hero', 'eventos', 'comunidade'];
+
+    // Configuração da área de trigger (20% do lado direito)
+    function checkTriggerArea(x) {
+      const screenWidth = window.innerWidth;
+      const triggerWidth = screenWidth * 0.2;
+      return x >= screenWidth - triggerWidth;
+    }
+
+    // Mouse move para detectar entrada na área
+    document.addEventListener('mousemove', (e) => {
+      const wasInArea = mouseInTriggerArea;
+      mouseInTriggerArea = checkTriggerArea(e.clientX);
+
+      // Entrou na área
+      if (mouseInTriggerArea && !wasInArea) {
+        sideNav?.classList.add('nav-visible');
+        navItems.forEach(item => item.classList.add('nav-visible'));
+      }
+
+      // Saiu da área
+      if (!mouseInTriggerArea && wasInArea) {
+        // Pequeno delay para não sumir imediatamente
+        setTimeout(() => {
+          if (!mouseInTriggerArea) {
+            sideNav?.classList.remove('nav-visible');
+            navItems.forEach(item => item.classList.remove('nav-visible'));
+          }
+        }, 100);
+      }
+    });
+
+    // Também mostrar ao passar diretamente sobre a navegação
+    sideNav?.addEventListener('mouseenter', () => {
+      sideNav.classList.add('nav-visible');
+    });
+
+    sideNav?.addEventListener('mouseleave', () => {
+      if (!mouseInTriggerArea) {
+        sideNav.classList.remove('nav-visible');
+      }
+    });
+
+    // Configuração do Intersection Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          currentSection = entry.target.id;
+          updateActiveNav();
+          updateProgressLine();
+          updateNavMode(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+
+    function updateActiveNav() {
+      navItems.forEach(item => {
+        item.classList.remove('nav-item-active');
+        const itemId = item.getAttribute('data-nav-item');
+        if (itemId === currentSection) {
+          item.classList.add('nav-item-active');
+        }
+      });
+    }
+
+    function updateProgressLine() {
+      const sectionIds = Array.from(sections).map(s => s.id);
+      const currentIndex = sectionIds.indexOf(currentSection);
+
+      if (currentIndex === -1 || !progressLine) {
+        if (progressLine) progressLine.style.height = '0%';
+        return;
+      }
+
+      const totalSections = sectionIds.length - 1;
+      const progress = totalSections === 0 ? 0 : (currentIndex / totalSections) * 100;
+      progressLine.style.height = `${progress}%`;
+    }
+
+    function updateNavMode(sectionId) {
+      if (!sideNav) return;
+
+      const isDark = darkSections.includes(sectionId);
+      sideNav.setAttribute('data-mode', isDark ? 'dark' : 'light');
+
+      const lineBg = sideNav.querySelector('.line-bg');
+      const navDots = sideNav.querySelectorAll('.nav-dot');
+      const scrollText = sideNav.querySelector('.scroll-text');
+      const scrollIndicator = sideNav.querySelector('.scroll-indicator');
+
+      if (lineBg) {
+        lineBg.style.borderLeftColor = isDark ? 'rgba(255,255,255,0.25)' : '';
+      }
+
+      navDots.forEach(dot => {
+        dot.style.backgroundColor = isDark ? 'rgba(255,255,255,0.4)' : '';
+      });
+
+      if (scrollText) {
+        scrollText.style.color = isDark ? 'rgba(255,255,255,0.5)' : '';
+      }
+
+      if (scrollIndicator) {
+        scrollIndicator.style.backgroundColor = isDark ? 'rgba(255,255,255,0.25)' : '';
+      }
+    }
+
+    // Click handlers para navegação suave
+    navButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = button.getAttribute('data-section');
+        const targetSection = document.getElementById(targetId);
+
+        if (targetSection) {
+          const offset = 80;
+          const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Atualizar também no scroll manual
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveNav();
+          updateProgressLine();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  });
+</script>

@@ -1,17 +1,28 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import BentoGrid from '../components/BentoGrid.astro';
+import Events from '../components/Events.astro';
+import Footer from '../components/Footer.astro';
+import SideNav from '../components/SideNav.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <SideNav />
+
+  <section id="hero">
+    <Hero />
+  </section>
+
+  <section id="sobre">
+    <BentoGrid />
+  </section>
+
+  <section id="eventos">
+    <Events />
+  </section>
+
+  <section id="depoimentos">
+    <Footer />
+  </section>
+</Layout>
